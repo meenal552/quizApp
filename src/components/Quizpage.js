@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { useState, useEffect } from "react";
+
 import { fetchMcqs } from "../actions/mcqAction";
 import { connect } from "react-redux";
 import Navbar from "./Navbar.js";
@@ -68,7 +68,7 @@ class Quizpage extends Component {
   previousQuestion = () => {
     const { question } = this.state;
     const { fetchMcqs } = this.props;
-    if (question == 1) {
+    if (question === 1) {
     } else {
       this.setState(
         {
@@ -82,7 +82,7 @@ class Quizpage extends Component {
     this.props.fetchMcqs(this.state.question);
   };
   nextQuestion = () => {
-    if (this.state.question == 5) {
+    if (this.state.question === 5) {
     } else {
       this.setState(
         {
@@ -134,7 +134,7 @@ class Quizpage extends Component {
           <button class="backfront" onClick={this.nextQuestion}>
             next
           </button>
-          {question == 5 ? (
+          {question === 5 ? (
             <Link to="/thankyou">
               <button
                 class="backfront"

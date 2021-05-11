@@ -5,7 +5,7 @@ const initialState = {
   item: {},
 };
 
-export default function (state = initialState, action) {
+export default function mcqReducer(state = initialState, action) {
   switch (action.type) {
     case FETCH_MCQS:
       return {
