@@ -1,0 +1,49 @@
+{
+  "mcq": [
+    {
+      "id": 1,
+      "question": " How many times does the kidney filter blood in a day?",
+      "option1": "100",
+      "option2": "200",
+      "option3": "300",
+      "option4": "400",
+      "ans": "400"
+    },
+    {
+      "id": 2,
+      "question": "Kautilya was the prime minister of which ruler?",
+      "option1": "Chandra Gupta",
+      "option2": "Chandra Gupta II",
+      "option3": " Chandragupta Maurya",
+      "option4": " Ashoka",
+      "ans": "Chandragupta Maurya"
+    },
+    {
+      "id": 3,
+      "question": "Which of the following imaginary line almost divides India into two equal parts?",
+      "option1": "Equator",
+      "option2": "Tropic of Cancer",
+      "option3": "Tropic of Capricorn",
+      "option4": "Arctic Circle",
+      "ans": "Tropic of Cancer"
+    },
+    {
+      "id": 4,
+      "question": " Which of the following water bodies is the home of Lakshadweep?",
+      "option1": "Arabian Sea",
+      "option2": " Bay of Bengal",
+      "option3": "Indian Ocean",
+      "option4": "Atlantic Ocean",
+      "ans": "Arabian Sea"
+    },
+    {
+      "id": 5,
+      "question": "Which of the following water bodies separates the Andaman from the",
+      "option1": "11° Channel",
+      "option2": "Gulf of Mannar",
+      "option3": "10° Channel",
+      "option4": "Andaman Sea",
+      "ans": "10° Channel"
+    }
+  ]
+}

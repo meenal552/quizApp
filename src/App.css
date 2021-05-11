@@ -1,38 +1,126 @@
-.App {
+*,
+*::before,
+*::after {
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+}
+
+html,
+body,
+#root,
+.welcome-container {
+  width: 100%;
+  height: 100%;
+}
+.welcome-container h1 {
+  padding-top: 2rem;
+  color: black;
+}
+body {
+  -moz-osx-font-smoothing: grayscale;
+}
+.welcome-container {
+  background-color: aliceblue;
+  /* background-image: url("./img1.jpeg"); */
+}
+.welcome-card {
+  background-color: white;
+  box-shadow: 0 4px 8px 0 rgb(240, 236, 236);
+  /* width: 100vh;
+  height: 100vh; */
+  /* margin-bottom: 30px; */
+  width: 38%;
+
+  transform-origin: 0 0;
+  transition: transform 0.25s, visibility 0.25s ease-out;
+  margin: auto;
+}
+
+.welcome-card:hover {
+  box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.2);
+  transform: scale(1.1);
+}
+.lets-start {
   text-align: center;
+  height: 17rem;
+  font-family: Cambria, Cochin, Georgia, Times, "Times New Roman", serif;
+}
+.lets-start p {
+  font-family: monospace;
+  font-size: larger;
+  padding-top: 5rem;
+  color: #000;
 }
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
-}
-
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
-}
-
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
+.welcome-card button,
+.backfront {
+  border: none;
+  outline: 0;
+  padding: 12px;
   color: white;
+  background-color: #000;
+  text-align: center;
+  cursor: pointer;
+  width: 100%;
+  font-size: 18px;
+  align-self: flex-end;
 }
 
-.App-link {
-  color: #61dafb;
+.welcome-card button:hover {
+  opacity: 0.7;
 }
+.question-container {
+  width: 60%;
 
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+  margin: auto;
+}
+.questions {
+  margin-top: 8rem;
+  border: 3px solid rgb(0, 109, 128);
+  border-radius: 5px;
+  padding: 1rem;
+  background-color: #000;
+  color: whitesmoke;
+  margin-bottom: 1rem;
+}
+.options label {
+  padding: 0.25rem;
+}
+.options {
+  border-style: outset;
+
+  border: 3px solid rgb(0, 109, 128);
+  padding: 10px;
+}
+.button-container {
+  display: flex;
+  width: 19%;
+  margin: auto;
+}
+.backfront {
+  border-radius: 5px;
+  margin-right: 1rem;
+  margin-top: 1.5rem;
+  padding: 3px;
+  width: 4rem;
+  border-style: outset;
+}
+.thankyoupage {
+  display: flex;
+  width: 50%;
+  height: 100%;
+  margin: auto;
+  background-repeat: no-repeat;
+  background-image: url("./thankyou.png");
+}
+.timer {
+  display: flex;
+  justify-content: space-around;
+  font-family: sans-serif;
+  text-align: center;
+  padding-top: 0.75rem;
+}
+.time {
+  font-size: 1.5rem;
 }
