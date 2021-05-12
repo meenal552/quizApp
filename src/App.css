@@ -76,7 +76,7 @@ body {
   margin: auto;
 }
 .questions {
-  margin-top: 8rem;
+  margin-top: 2rem;
   border: 3px solid rgb(0, 109, 128);
   border-radius: 5px;
   padding: 1rem;
@@ -107,19 +107,22 @@ body {
   border-style: outset;
 }
 .thankyoupage {
+  font-size: xx-large;
   display: flex;
-  width: 50%;
   height: 100%;
-  margin: auto;
-  background-repeat: no-repeat;
-  background-image: url("./thankyou.png");
+  text-align: center;
+  background-color: aliceblue;
+  font-family: cursive;
+  align-items: center;
+  justify-content: center;
 }
 .timer {
   display: flex;
   justify-content: space-around;
   font-family: sans-serif;
   text-align: center;
-  padding-top: 0.75rem;
+  padding-top: 0.25rem;
+  background-color: aliceblue;
 }
 .time {
   font-size: 1.5rem;

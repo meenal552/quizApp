@@ -3,7 +3,7 @@ import React, { Component } from "react";
 import { fetchMcqs } from "../actions/mcqAction";
 import { connect } from "react-redux";
 import Navbar from "./Navbar.js";
-
+import { Redirect } from "react-router";
 import { Link } from "react-router-dom";
 
 class Quizpage extends Component {
@@ -12,118 +12,189 @@ class Quizpage extends Component {
     this.state = {
       timer: Date.now(),
       question: 1,
+      answers: [],
+      timeroff: false,
     };
+
+    this.isOptionSelected = this.isOptionSelected.bind(this);
+    this.startTimer = this.startTimer.bind(this);
+    this.onChangeValue = this.onChangeValue.bind(this);
   }
   componentWillMount() {
-    // console.log("wee " + this.state.question);
-
     this.props.fetchMcqs(this.state.question);
   }
-  componentWillUpdate(nextProps, nextState) {
-    // localStorage.setItem("timer", JSON.stringify(nextState));
-    // console.log("timer " + this.timer);
-    // var data = localStorage.getItem("timer");
-    // console.log("data " + data);
-    // this.props.fetchMcqs(this.state.question);
+
+  componentWillUnmount() {
+    window.sessionStorage.clear();
   }
   componentDidMount() {
-    // this.timer = JSON.parse(localStorage.getItem("timer"));
-    // if (localStorage.getItem("timer")) {
-    //   this.setState({
-    //     timer: this.timer,
-    //   });
-    // }
+    let sec = parseInt(window.sessionStorage.getItem("seconds"));
+    let min = parseInt(window.sessionStorage.getItem("minutes"));
+
+    if (parseInt(min * sec)) {
+      var fiveMinutes = parseInt(min * 60) + sec;
+    } else {
+      fiveMinutes = 60 * 20;
+    }
+
+    // let display = document.querySelector("#timer");
+    this.startTimer(fiveMinutes, document.querySelector("#timer"));
+
     this.props.fetchMcqs(this.state.question);
   }
 
-  // const [currentQuestion, setcurrentQuestion] = useState([]);
+  startTimer(duration, display) {
+    var timer = duration,
+      minutes,
+      seconds;
+    const xyz = setInterval(function () {
+      minutes = parseInt(timer / 60, 10);
+      seconds = parseInt(timer % 60, 10);
 
-  // useEffect(() => {
-  //   const getTasks = async () => {
-  //     const tasksFromServer = await fetchTasks();
-  //     setTasks(tasksFromServer);
-  //   };
+      minutes = minutes < 10 ? "0" + minutes : minutes;
+      seconds = seconds < 10 ? "0" + seconds : seconds;
 
-  //   getTasks();
-  // }, []);
+      display.textContent = minutes + ":" + seconds;
 
-  // // Fetch Tasks
-  // const fetchTasks = async () => {
-  //   const res = await fetch("http://localhost:5000/mcq");
-  //   const data = await res.json();
+      if (--timer < 0) {
+        // timer = duration;
+        clearInterval(xyz);
+      }
 
-  //   return data;
-  // };
+      if (display.textContent === "00:00") {
+        return;
+      }
+      // console.log(parseInt(seconds));
+      window.sessionStorage.setItem("seconds", seconds);
+      window.sessionStorage.setItem("minutes", minutes);
+    }, 1000);
+  }
 
-  // // Fetch Task
-  // const fetchTask = async (id) => {
-  //   const res = await fetch(`http://localhost:5000/mcq/${id}`);
-  //   const data = await res.json();
-  //   console.log("id is  " + id + " data is " + data);
-  //   return data;
-  // };
-
-  // const showquestion = fetchTask(currentQuestion);
-  // console.log("show question  " + showquestion.id);
+  updateState = () => {
+    this.setState({
+      timeroff: true,
+    });
+  };
   previousQuestion = () => {
-    const { question } = this.state;
-    const { fetchMcqs } = this.props;
-    if (question === 1) {
-    } else {
-      this.setState(
-        {
-          question: question - 1,
-        },
-        fetchMcqs(question - 1)
-      );
+    if (this.isOneChecked) {
+      const { question } = this.state;
+      const { fetchMcqs } = this.props;
+      if (question === 1) {
+      } else {
+        this.setState(
+          {
+            question: question - 1,
+          },
+          fetchMcqs(question - 1)
+        );
+      }
     }
   };
-  fetching = () => {
-    this.props.fetchMcqs(this.state.question);
-  };
+
   nextQuestion = () => {
-    if (this.state.question === 5) {
-    } else {
-      this.setState(
-        {
-          question: this.state.question + 1,
-        },
-        this.props.fetchMcqs(this.state.question + 1)
-      );
-      // this.props.fetchMcqs(this.state.question);
+    if (this.isOneChecked()) {
+      if (this.state.question === 5) {
+      } else {
+        this.setState(
+          {
+            question: this.state.question + 1,
+          },
+          this.props.fetchMcqs(this.state.question + 1)
+        );
+      }
+      // console.log("next " + this.state.question + 1);
     }
-    console.log("next " + this.state.question + 1);
   };
+  isOneChecked = () => {
+    console.log("os one check ");
+    var chx = document.getElementsByTagName("input");
+    for (var i = 0; i < chx.length; i++) {
+      if (chx[i].type === "radio" && chx[i].checked) {
+        window.localStorage.setItem(this.state.question, i);
+        return true;
+      }
+    }
+    alert("Select one option!");
+    return false;
+  };
+
+  isOptionSelected(e) {
+    // console.log("ansers " + this.state.answers[this.state.question]);
+    if (this.state.answers[this.state.question] === e.target.value) return true;
+    return false;
+  }
+
+  onChangeValue(event) {
+    console.log("target value " + event.target.value);
+    let temp = this.state.answers;
+    temp[this.state.question - 1] = event.target.value;
+
+    this.setState({
+      answers: temp,
+    });
+    // event.target.setAttribute("checked", "");
+
+    console.log("answers " + this.state.answers);
+  }
   render() {
-    // const question = this.props.tasks.map((task) => (
-    //   <h3>hello {task.question}</h3>
-    // ));
     const { question } = this.state;
 
     return (
       <div>
-        <Navbar timer={this.state.timer} />
-        {/* <h3>hello {tasks[0].question}</h3> */}
+        {this.state.timeroff ? <Redirect to="/thankyou" /> : <div></div>}
+
+        <Navbar
+          timer={this.state.timer}
+          minutes={this.state.minutes}
+          seconds={this.state.seconds}
+        />
+
         <div className="question-container">
           <div className="questions">
             <span>Q{this.props.tasks.id}.</span>
             <p> {this.props.tasks.question}</p>
           </div>
-          <div className="options">
-            <input type="radio" />
-            <label for="option1">{this.props.tasks.option1}</label>
-          </div>
-          <div className="options">
-            <input type="radio" />
-            <label for="option2">{this.props.tasks.option2}</label>
-          </div>
-          <div className="options">
-            <input type="radio" />
-            <label for="option3">{this.props.tasks.option3}</label>
-          </div>
-          <div className="options">
-            <input type="radio" />
-            <label for="option4">{this.props.tasks.option4}</label>
+          <div className="options-container" onChange={this.onChangeValue}>
+            <div className="options">
+              <input
+                type="radio"
+                name="group"
+                value="1"
+                // onClick={this.handleClick.bind(this)}
+                // checked={false}
+              />
+              <label for="option1">{this.props.tasks.option1}</label>
+            </div>
+            <div className="options">
+              <input
+                type="radio"
+                name="group"
+                value="2"
+                // onClick={this.handleClick.bind(this)}
+                // checked={false}
+              />
+              <label for="option2">{this.props.tasks.option2}</label>
+            </div>
+            <div className="options">
+              <input
+                type="radio"
+                name="group"
+                value="3"
+                // onClick={this.handleClick.bind(this)}
+                // checked={false}
+              />
+              <label for="option3">{this.props.tasks.option3}</label>
+            </div>
+            <div className="options">
+              <input
+                type="radio"
+                name="group"
+                value="4"
+                // onClick={this.handleClick.bind(this)}
+                // checked={false}
+              />
+              <label for="option4">{this.props.tasks.option4}</label>
+            </div>
           </div>
         </div>
 
