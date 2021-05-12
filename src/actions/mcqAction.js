@@ -2,8 +2,7 @@ import { FETCH_MCQS } from "./types";
 
 export const fetchMcqs = (id) => (dispatch) => {
   console.log("fetching" + id);
-  const port = process.env.PORT || 5000;
-  fetch(`http://localhost:${port}/mcq/${id}`)
+  fetch(`https://quiz--site-server.herokuapp.com/mcq/${id}`)
     .then((res) => res.json())
     .then((mcqs) =>
       dispatch({
